@@ -1,0 +1,31 @@
+port: 8888
+
+spring.:
+  datasource:
+    username: admin
+    password: wow300100
+#    url: jdbc:mysql:aws://aurora-database-1.cluster-cuvvwkpr9qfd.rds.cn-north-1.amazonaws.com.cn/sample_db
+    url: jdbc:mysql:aws://guanlinz-database-1.cluster-clifbgi8dale.us-west-2.rds.amazonaws.com/sample_db
+    driver-class-name: software.aws.rds.jdbc.mysql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+      type:
+        descriptor:
+          sql:
+            BasicBinder: TRACE
+    org.springframework: ERROR
+    com.guanlinz: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"
+  file: app.log
