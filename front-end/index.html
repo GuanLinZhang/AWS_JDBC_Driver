@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <div id="app">
+      <button @click="startBtnClick">Start</button>
+      <button @click="stopBtnClick">Stop</button>
+      <button @click="resetBtnClick">Reset</button>
+      <ul>
+        <li v-for="user in users" :key="user.id">
+          {{user.id}} {{user.name}} {{user.email}}
+        </li>
+      </ul>
+    </div>
+    <script>
+      const baseURL = "http://localhost:8080";
+
+      var app = new Vue({
+        el: "#app",
+        created: function () {
+          this.getUsers();
+        },
+        data: {
+          messages: [],
+          users: [],
+          intervalId: "",
+        },
+        methods: {
+          getUsers: async function () {
+            let result = await axios.get(`${baseURL}/users`);
+            this.users = result.data;
+          },
+          saveUser: async function (user) {
+            let result = await axios.post(`${baseURL}/users`, user);
+            console.log("result", result.data);
+            this.users.push(result.data);
+          },
+          startBtnClick: function () {
+            this.intervalId = setInterval(this.saveUserAndRefresh, 1000);
+          },
+          stopBtnClick: function () {
+            clearInterval(this.intervalId);
+          },
+          resetBtnClick: async function () {
+            let result = await axios.delete(`${baseURL}/users/reset`);
+            console.log(result.data.message);
+            this.getUsers();
+          },
+          saveUserAndRefresh: function () {
+            let newUser = this.generateUser();
+            console.log("newUser", newUser);
+            this.saveUser(newUser);
+          },
+          generateUser: function () {
+            let result = "";
+            let characters =
+              "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            let charactersLength = characters.length;
+            for (let i = 0; i < 5; i++) {
+              result += characters.charAt(
+                Math.floor(Math.random() * charactersLength)
+              );
+            }
+            return {
+              name: result,
+              email: `${result}@nwcdcloud.cn`,
+            };
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

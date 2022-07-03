@@ -4,9 +4,16 @@ spring.:
   datasource:
     username: admin
     password: wow300100
-#    url: jdbc:mysql:aws://aurora-database-1.cluster-cuvvwkpr9qfd.rds.cn-north-1.amazonaws.com.cn/sample_db
+#    url: jdbc:mysql:aws://aurora-database-1.cluster-cuvvwkpr9qfd.rds.cn-north-1.amazonaws.com.cn/sample_db?autoReconnect=true&useSSL=false
     url: jdbc:mysql:aws://guanlinz-database-1.cluster-clifbgi8dale.us-west-2.rds.amazonaws.com/sample_db
+#    url: jdbc:mysql://guanlinz-database-1.cluster-clifbgi8dale.us-west-2.rds.amazonaws.com/sample_db?autoReconnectForPools=true&useSSL=false&failOverReadOnly=false
     driver-class-name: software.aws.rds.jdbc.mysql.Driver
+#    driver-class-name:  com.mysql.cj.jdbc.Driver
+    hikari:
+      testOnBorrow: true
+      validationQuery: SELECT 1
+      exception-override-class-name: com.guanlinz.AWS_JDBC_Driver.Util.HikariCPSQLExceptionOverride
+
   jpa:
     show-sql: true
     hibernate:
@@ -18,13 +25,6 @@ logging:
     org:
       hibernate:
         SQL: DEBUG
-        type: TRACE
-      type:
-        descriptor:
-          sql:
-            BasicBinder: TRACE
-    org.springframework: ERROR
-    com.guanlinz: DEBUG
   pattern:
     console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
     file: "%d %p %c{1.} [%t] %m%n"
