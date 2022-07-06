@@ -33,7 +33,6 @@ public class UserController {
     }
 
     @PostMapping()
-    @Transactional
     public ResponseEntity<?> save(@RequestBody User newUser) {
         try {
             return ResponseEntity.ok(userService.save(newUser));
@@ -43,7 +42,6 @@ public class UserController {
     }
 
     @DeleteMapping("/reset")
-    @Transactional
     public ResponseEntity<?> reset() {
         try {
             userService.reset();

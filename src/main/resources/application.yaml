@@ -5,7 +5,7 @@ spring.:
     username: admin
     password: wow300100
 #    url: jdbc:mysql:aws://aurora-database-1.cluster-cuvvwkpr9qfd.rds.cn-north-1.amazonaws.com.cn/sample_db?autoReconnect=true&useSSL=false
-    url: jdbc:mysql:aws://guanlinz-database-1.cluster-clifbgi8dale.us-west-2.rds.amazonaws.com/sample_db
+    url: jdbc:mysql:aws://guanlinz-database-1.cluster-clifbgi8dale.us-west-2.rds.amazonaws.com/sample_db?useSSL=false
 #    url: jdbc:mysql://guanlinz-database-1.cluster-clifbgi8dale.us-west-2.rds.amazonaws.com/sample_db?autoReconnectForPools=true&useSSL=false&failOverReadOnly=false
     driver-class-name: software.aws.rds.jdbc.mysql.Driver
 #    driver-class-name:  com.mysql.cj.jdbc.Driver
